@@ -12,7 +12,20 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 //Solve Cors
-app.use(cors({ credentials: true, origin: "http://localhost:3000" }));
+const allowedOrigins = ["http://localhost:5173", "http://localhost:3000"];
+
+app.use(
+  cors({
+    credentials: true,
+    origin: function (origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
+  })
+);
 
 //upload directory
 app.use("/uploads", express.static(path.join(__dirname, "/uploads")));
