@@ -3,7 +3,7 @@ import "./Profile.css";
 import { uploads } from "../../utils/config";
 
 // components
-import Message from "../../components/Message";
+import Message from "../../components/Message/Message";
 import { Link } from "react-router-dom";
 import { BsFillEyeFill, BsPencilFill, BsXLg } from "react-icons/bs";
 
@@ -29,6 +29,7 @@ const Profile = () => {
 
   const { user, loading } = useSelector((state) => state.user);
   const { user: userAuth } = useSelector((state) => state.auth);
+
   const {
     photos,
     loading: loadingPhoto,
@@ -198,7 +199,7 @@ const Profile = () => {
       <div className="user-photos">
         <h2>Fotos publicadas:</h2>
         <div className="photos-container">
-          {photos &&
+          {Array.isArray(photos) &&
             photos.map((photo) => (
               <div className="photo" key={photo._id}>
                 {photo.image && (

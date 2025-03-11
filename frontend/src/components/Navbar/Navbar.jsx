@@ -43,8 +43,6 @@ const Navbar = () => {
     }
   };
 
-  console.log("user: ", user);
-
   return (
     <nav id="nav">
       <Link to="/">

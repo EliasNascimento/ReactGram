@@ -15,13 +15,12 @@ import EditProfile from "./pages/EditProfile/EditProfile";
 // Components
 import Navbar from "./components/Navbar/Navbar";
 import Footer from "./components/Footer/Footer";
+import Profile from "./pages/Profile/Profile";
 
 function App() {
   const { auth, loading } = useAuth();
 
   if (loading) return <p>Carregando...</p>;
-
-  console.log("auth :", auth);
 
   return (
     <div className="App">
@@ -36,6 +35,10 @@ function App() {
             <Route
               path="/profile"
               element={auth ? <EditProfile /> : <Navigate to="/login" />}
+            />
+            <Route
+              path="/users/:id"
+              element={auth ? <Profile /> : <Navigate to="/login" />}
             />
             <Route
               path="/login"

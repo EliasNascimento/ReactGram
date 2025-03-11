@@ -42,24 +42,17 @@ const Profile = () => {
     e.preventDefault();
 
     // Gather user data from states
-    const userData = {
-      name,
-    };
+    const userData = { name };
+    if (profileImage) userData.profileImage = profileImage;
+    if (bio) userData.bio = bio;
+    if (password) userData.password = password;
 
-    if (profileImage) {
-      userData.profileImage = profileImage;
-    }
-
-    if (bio) {
-      userData.bio = bio;
-    }
-
-    if (password) {
-      userData.password = password;
-    }
-
-    // build form data
+    // Criando FormData e adicionando os valores corretamente
     const formData = new FormData();
+
+    // for (let key in userData) {
+    //   formData.append(key, userData[key]);
+    // }
 
     const userFormData = Object.keys(userData).forEach((key) =>
       formData.append(key, userData[key]),
