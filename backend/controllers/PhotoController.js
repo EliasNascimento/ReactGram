@@ -39,31 +39,26 @@ const deletePhoto = async (req, res) => {
   const { id } = req.params;
   const reqUser = req.user;
 
-  try {
-    const photo = await Photo.findById(mongoose.Types.ObjectId(id));
+  const photo = await Photo.findById(new mongoose.Types.ObjectId(id));
 
-    //check if photo exists
-    if (!photo) {
-      res.status(404).json({ errors: ["Foto não encontrada!"] });
-      return;
-    }
-
-    //check if photo belongs to user
-    if (!photo.userId.equals(reqUser._id)) {
-      res.status(422).json({
-        errors: ["Ocorreu um erro, por favor tente novamente mais tarde."],
-      });
-    }
-
-    await Photo.findByIdAndDelete(photo._id);
-
-    res
-      .sendStatus(200)
-      .json({ id: photo._id, message: "Foto excluida com sucesso!" });
-  } catch (error) {
+  //check if photo exists
+  if (!photo) {
     res.status(404).json({ errors: ["Foto não encontrada!"] });
     return;
   }
+
+  //check if photo belongs to user
+  if (!photo.userId.equals(reqUser._id)) {
+    res.status(422).json({
+      errors: ["Ocorreu um erro, por favor tente novamente mais tarde."],
+    });
+  }
+
+  await Photo.findByIdAndDelete(photo._id);
+
+  res
+    .sendStatus(200)
+    .json({ id: photo._id, message: "Foto excluida com sucesso!" });
 };
 
 //Get all photos
@@ -107,7 +102,7 @@ const updatePhoto = async (req, res) => {
   const { title } = req.body;
   const reqUser = req.user;
 
-  const photo = await Photo.findById(mongoose.Types.ObjectId(id));
+  const photo = await Photo.findById(new mongoose.Types.ObjectId(id));
 
   //check if photo exists
   if (!photo) {
